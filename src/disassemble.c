@@ -40,6 +40,7 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0x4: {
+		/* LDR from/to register(s) */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
 		printf("LDR\tR%d", op1);
@@ -50,6 +51,7 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0x5: {
+		/* LDR value from register */
 		uint8_t op1;
 		uint16_t op2;
 		op1 = (op->operands & 0xF0000) >> 16;
@@ -58,6 +60,7 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0x8: {
+		/* STR from/to register(s) */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
 		printf("STR\tR%d", op1);
@@ -67,6 +70,7 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0x9: {
+		/* STR value into register */
 		uint8_t op1;
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
@@ -74,6 +78,7 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0xB: {
+		/* Conditional branching */
 		uint8_t reg;
 		opcode_get_register_register(op, &reg, NULL);
 		if (op->offset == 0) {
@@ -91,6 +96,7 @@ void disassemble(opcode_t *op) {
 		printf("\n");
 	}
 	case 0xC: {
+		/* Register value comparison */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
 		printf("CMP\tR%d, R%d\n", op1, op2);
