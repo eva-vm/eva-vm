@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
 	args_t args;
 	registers_t registrers;
 	opcode_t *ram;
-	int i = 0;
+	int instr_count = 0;
 
 	args_parse(&args, argc, argv);
 
@@ -30,10 +30,13 @@ int main(int argc, char **argv) {
 
 	ram = malloc(sizeof(opcode_t) * args.ram_size);
 
-	while (fread(ram + i, sizeof(opcode_t), 1, args.input))
-		i++;
-	printf("Read %d instructions into memory", i);
+	while (fread(ram + instr_count, sizeof(opcode_t), 1, args.input))
+		instr_count++;
+	printf("Read %d instructions into memory", instr_count);
 
+	for (int i = 0; i < instr_count; i++) {
+		disassemble(ram[i]);
+	}
 	free(ram);
 	return 0;
 }
