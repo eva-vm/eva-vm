@@ -1,6 +1,9 @@
 name = 'eva'
 
-eva_src = files('disassemble.c')
+eva_src = files(
+	'cli.c',
+	'disassemble.c'
+)
 
 eva_lib = static_library(name, eva_src)
 

@@ -5,5 +5,8 @@ endif
 test_src = files('test.c')
 
 test_name = meson.project_name() + '-test'
-test_exe = executable(test_name, test_src, link_with: eva_lib)
+test_exe = executable(test_name, test_src,
+	link_with: eva_lib,
+	include_directories: include_directories('../src')
+)
 test(test_name, test_exe)
