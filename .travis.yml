@@ -10,10 +10,10 @@ addons:
       - gcc
       - clang
 env:
-  - CC=gcc MESON_OPTIONS="--default_library=static"
-  - CC=gcc MESON_OPTIONS="--default_library=shared"
-  - CC=clang MESON_OPTIONS="--default_library=static"
-  - CC=clang MESON_OPTIONS="--default_library=shared"
+  - CC=gcc MESON_OPTIONS="--default-library=static"
+  - CC=gcc MESON_OPTIONS="--default-library=shared"
+  - CC=clang MESON_OPTIONS="--default-library=static"
+  - CC=clang MESON_OPTIONS="--default-library=shared"
 
 before_script:
   - pip install ninja meson
