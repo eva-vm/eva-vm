@@ -8,7 +8,14 @@
 			"label": "build",
 			"mode": "build",
 			"group": "build",
-			"problemMatcher": [],
+			"problemMatcher": []
 		},
+		{
+			"type": "meson",
+			"target": "meson-out/evavm-test",
+			"mode": "build",
+			"group": "build",
+			"problemMatcher": []
+		}
 	]
 }

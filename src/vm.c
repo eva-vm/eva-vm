@@ -1,50 +1,39 @@
+#include "cli.h"
 #include "disassemble.h"
 #include "eva.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-int main() {
-	opcode_t op;
-	FILE *f = fopen("code.eva", "wb");
+void print_help(char *argv0) {
+	printf("Usage: %.50s [-h] [--debug] [--ram-size SIZE] FILE\n", argv0);
+	printf("\n");
+	printf("INPUT\t\tFile to execute by the Eva VM");
+	printf("-h\t\tPrint this help screen and exit\n");
+	printf("--debug\t\tRun file in debug mode (allows settings breakpoints and "
+	       "printing memory\n");
+	printf(
+	    "--ram-size SIZE\tSets the size of allocated RAM space to SIZE bytes");
+}
 
-	printf("Create machine code:\n");
-	printf("ADD\tR0, 4\n");
-	op.instruction = 1;
-	op.reinit = 0;
-	op.flag = 0;
-	op.offset = 0;
-	op.operands = 0x00004;
-	fwrite(&op, sizeof(opcode_t), 1, f);
+int main(int argc, char **argv) {
+	args_t args;
+	registers_t registrers;
+	opcode_t *ram;
+	int i = 0;
 
-	printf("ADD\tR1, 8\n");
-	op.operands = 0x10008;
-	fwrite(&op, sizeof(opcode_t), 1, f);
+	args_parse(&args, argc, argv);
 
-	printf("ADD\tR0, R1\n");
-	op.instruction = 0;
-	op.operands = 0x01000;
-	fwrite(&op, sizeof(opcode_t), 1, f);
-
-	printf("PUSH\tR0\n");
-	op.instruction = 0b10;
-	op.operands = 0x00000;
-	fwrite(&op, sizeof(opcode_t), 1, f);
-
-	fclose(f);
-	f = fopen("code.eva", "rb");
-
-	printf("======= Reading from file:\n");
-
-	while (fread(&op, sizeof(opcode_t), 1, f)) {
-		/* printf("========\n");
-		printf("Instruction: %d\n", op.instruction);
-		printf("Reset: %d, flag: %d\n", op.reinit, op.flag);
-		printf("Offset: %d\n", op.offset);
-		printf("Operand 1: %d, Operand 2: %d\n", op.operands >> 16,
-		           op.operands & 0xFFFF);
-		printf("==== Disassembly:\n"); */
-		disassemble(op);
+	if (args.help) {
+		print_help(argv[0]);
+		return 0;
 	}
 
-	fclose(f);
+	ram = malloc(sizeof(opcode_t) * args.ram_size);
+
+	while (fread(ram + i, sizeof(opcode_t), 1, args.input))
+		i++;
+	printf("Read %d instructions into memory", i);
+
+	free(ram);
 	return 0;
 }
