@@ -39,5 +39,8 @@ void disassemble(opcode_t op) {
 			printf("PUSH\tR%d\n", op1);
 		break;
 	}
+	default:
+		printf("####\t; Unrecognized opcode");
+		break;
 	}
 }
