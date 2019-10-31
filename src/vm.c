@@ -35,8 +35,7 @@ int main(int argc, char **argv) {
 	printf("Read %d instructions into memory\n", instr_count);
 
 	for (int i = 0; i < instr_count; i++) {
-		disassemble(ram[i]);
-		printf("\n");
+		disassemble(ram + i);
 	}
 	free(ram);
 	return 0;

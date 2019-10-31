@@ -10,6 +10,6 @@
  * input assembly code.
  * @param op Opcode to disassemble.
  */
-void disassemble(opcode_t op);
+void disassemble(opcode_t *op);
 
 #endif
