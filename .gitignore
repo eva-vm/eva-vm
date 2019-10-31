@@ -52,10 +52,10 @@ Mkfile.old
 dkms.conf
 
 # Meson
-build/
-subprojects/
-!subprojects/*.wrap
+subprojects/packagecache
+subprojects/SDL2*
 
+# VS Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
