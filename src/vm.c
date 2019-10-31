@@ -1,6 +1,7 @@
 #include "cli.h"
 #include "disassemble.h"
 #include "eva.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -19,7 +20,8 @@ int main(int argc, char **argv) {
 	args_t args;
 	registers_t registrers;
 	opcode_t *ram;
-	int instr_count = 0;
+	uint8_t bits[sizeof(opcode_t)];
+	int instr_count = 0, i = 0;
 
 	args_parse(&args, argc, argv);
 
@@ -30,11 +32,13 @@ int main(int argc, char **argv) {
 
 	ram = malloc(sizeof(opcode_t) * args.ram_size);
 
-	while (fread(ram + instr_count, sizeof(opcode_t), 1, args.input))
+	while (opcode_read(ram + instr_count, args.input) &&
+	       instr_count < args.ram_size) {
 		instr_count++;
+	}
 	printf("Read %d instructions into memory\n", instr_count);
 
-	for (int i = 0; i < instr_count; i++) {
+	for (i = 0; i < instr_count; i++) {
 		disassemble(ram + i);
 	}
 	free(ram);

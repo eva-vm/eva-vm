@@ -2,6 +2,7 @@
 #define _H_EVA
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 
 typedef struct opcode_s {
 	unsigned instruction : 4;
@@ -13,6 +14,7 @@ typedef struct opcode_s {
 
 typedef uint32_t registers_t[16];
 
+size_t opcode_read(opcode_t *out, FILE *in);
 void opcode_get_register_register(opcode_t *op, uint8_t *reg1, uint8_t *reg2);
 void opcode_get_register_value(opcode_t *op, uint8_t *reg, uint16_t *val);
 
