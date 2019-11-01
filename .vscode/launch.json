@@ -10,7 +10,7 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/.vscode/build/meson-out/eva",
 			"args": [
-				"/home/solarliner/Documents/Projets/VSCode/eva-vm/eva_asm/examples/test.evo"
+				"${workspaceFolder}/.vscode/test.evo"
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",

@@ -40,12 +40,13 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0x3: {
+		/* Subtract between registers */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
 		if (op->flag)
-			printf("SUBC\tR%d, R%d", op1, op2);
+			printf("SUBC\tR%d, R%d\n", op1, op2);
 		else
-			printf("SUB\tR%d, R%d", op1, op2);
+			printf("SUB\tR%d, R%d\n", op1, op2);
 		break;
 	}
 	case 0x4: {
@@ -69,13 +70,14 @@ void disassemble(opcode_t *op) {
 		break;
 	}
 	case 0x7: {
+		/* Subtract value from register */
 		uint8_t op1;
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->flag)
-			printf("SUBC\tR%d, #0x%04X", op1, op2);
+			printf("SUBC\tR%d, #0x%04X\n", op1, op2);
 		else
-			printf("SUB\tR%d, #0x%04X", op1, op2);
+			printf("SUB\tR%d, #0x%04X\n", op1, op2);
 		break;
 	}
 	case 0x8: {
@@ -120,6 +122,15 @@ void disassemble(opcode_t *op) {
 		opcode_get_register_register(op, &op1, &op2);
 		printf("CMP\tR%d, R%d\n", op1, op2);
 		break;
+	}
+	case 0xF: {
+		/* I/O operations */
+		uint8_t reg;
+		opcode_get_register_register(op, &reg, NULL);
+		if (op->flag)
+			printf("OUT\tR%d\n", reg);
+		else
+			printf("IN\tR%d\n", reg);
 	}
 	default:
 		printf("#### ; Unrecognized opcode\n");
