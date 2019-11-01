@@ -23,11 +23,11 @@ void disassemble(opcode_t *op) {
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->reset)
-			printf("MOV\tR%d, #%04X\n", op1, op2);
+			printf("MOV\tR%d, #0x%04X\n", op1, op2);
 		else if (op->flag)
-			printf("ADC\tR%d, #%04X\n", op1, op2);
+			printf("ADC\tR%d, #0x%04X\n", op1, op2);
 		else
-			printf("ADD\tR%d, #%04X\n", op1, op2);
+			printf("ADD\tR%d, #0x%04X\n", op1, op2);
 		break;
 	}
 	case 0x2: {
@@ -65,7 +65,7 @@ void disassemble(opcode_t *op) {
 		uint16_t op2;
 		op1 = (op->operands & 0xF0000) >> 16;
 		op2 = (op->operands & 0x0FFFF);
-		printf("LDR\tR%d, %04X\n", op1, op2);
+		printf("LDR\tR%d, #0x%04X\n", op1, op2);
 		break;
 	}
 	case 0x7: {
@@ -73,9 +73,9 @@ void disassemble(opcode_t *op) {
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->flag)
-			printf("SUBC\tR%d, %04X", op1, op2);
+			printf("SUBC\tR%d, #0x%04X", op1, op2);
 		else
-			printf("SUB\tR%d, %04X", op1, op2);
+			printf("SUB\tR%d, #0x%04X", op1, op2);
 		break;
 	}
 	case 0x8: {
@@ -93,7 +93,7 @@ void disassemble(opcode_t *op) {
 		uint8_t op1;
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
-		printf("STR\tR%d, %04X\n", op1, op2);
+		printf("STR\tR%d, #0x%04X\n", op1, op2);
 		break;
 	}
 	case 0xB: {
