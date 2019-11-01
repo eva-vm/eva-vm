@@ -18,10 +18,8 @@ void print_help(char *argv0) {
 
 int main(int argc, char **argv) {
 	args_t args;
-	registers_t registrers;
 	opcode_t *ram;
-	uint8_t bits[sizeof(opcode_t)];
-	int instr_count = 0, i = 0;
+	int instr_count = 0;
 
 	args_parse(&args, argc, argv);
 
@@ -36,10 +34,27 @@ int main(int argc, char **argv) {
 	       instr_count < args.ram_size) {
 		instr_count++;
 	}
-	printf("Read %d instructions into memory\n", instr_count);
+	if (args.disassemble) {
+		fprintf(stderr, "Read %d instructions into memory\n", instr_count);
 
-	for (i = 0; i < instr_count; i++) {
-		disassemble(ram + i);
+		for (int i = 0; i < instr_count; i++) {
+			disassemble(ram + i);
+		}
+	} else {
+		// RUN THE THING!
+		registers_t registers = {0};
+
+		unsigned op_r1;
+		unsigned op_r2;
+		unsigned op_adr;
+		opcode_t curr_instr;
+
+		while (instr_count) {
+			curr_instr = ram[registers[EVA_REG_PC]];
+			opcode_eval(ram + registers[EVA_REG_PC], ram, registers);
+			instr_count--;
+			registers[EVA_REG_PC]++;
+		}
 	}
 	free(ram);
 	return 0;

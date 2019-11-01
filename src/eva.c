@@ -1,5 +1,4 @@
 #include "eva.h"
-#include <stdint.h>
 
 size_t opcode_read(opcode_t *out, FILE *in) {
 	uint8_t bits[4];

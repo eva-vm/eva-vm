@@ -10,6 +10,7 @@ void args_init(args_t *args) {
 	args->ram_size =
 	    256 * 1024 * 1024 / sizeof(opcode_t); // 1 instruction is 4 bits long
 	args->help = 0;
+	args->disassemble = 0;
 	args->input = NULL;
 }
 
@@ -24,7 +25,10 @@ void args_parse(args_t *args, int argc, char **argv) {
 		else if (strcmp(argv[i], "--ram-size") == 0) {
 			sscanf(argv[i++], "%d", &args->ram_size);
 			args->ram_size *= 1024 * 1024 / sizeof(opcode_t);
-		} else
+		} else if (strcmp(argv[i], "--disassemble"))
+			args->disassemble = 1;
+
+		else
 			args->input = fopen(argv[i], "rb");
 		i++;
 	}

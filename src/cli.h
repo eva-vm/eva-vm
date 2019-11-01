@@ -26,6 +26,11 @@ typedef struct {
 	 */
 	int help;
 	/**
+	 * @brief Only disassemble executable to stdout, don't execute.
+	 *
+	 */
+	int disassemble;
+	/**
 	 * @brief Input file
 	 *
 	 */

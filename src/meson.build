@@ -3,7 +3,8 @@ name = 'eva'
 eva_src = files(
 	'cli.c',
 	'disassemble.c',
-	'eva.c'
+	'eva.c',
+	'eval.c'
 )
 
 eva_lib = static_library(name, eva_src)
