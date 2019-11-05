@@ -10,7 +10,7 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/.vscode/build/meson-out/eva",
 			"args": [
-				"${workspaceFolder}/.vscode/test.evo"
+				"${workspaceFolder}/.vscode/input.evo"
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
