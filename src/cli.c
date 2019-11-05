@@ -25,7 +25,7 @@ void args_parse(args_t *args, int argc, char **argv) {
 		else if (strcmp(argv[i], "--ram-size") == 0) {
 			sscanf(argv[i++], "%d", &args->ram_size);
 			args->ram_size *= 1024 * 1024 / sizeof(opcode_t);
-		} else if (strcmp(argv[i], "--disassemble"))
+		} else if (strcmp(argv[i], "--disassemble") == 0)
 			args->disassemble = 1;
 
 		else
