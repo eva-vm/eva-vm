@@ -126,6 +126,7 @@ void disassemble(opcode_t *op) {
 			printf("OUT\tR%d\n", reg);
 		else
 			printf("IN\tR%d\n", reg);
+		break;
 	}
 	default:
 		printf("#### ; Unrecognized opcode\n");
