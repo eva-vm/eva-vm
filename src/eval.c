@@ -182,7 +182,7 @@ void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 			eval_sub_rr(op, ram, registers);
 		break;
 	case 0x4:
-		eval_ldr_rc(op, ram, registers);
+		eval_ldr_rr(op, ram, registers);
 		break;
 	case 0x5:
 		eval_ldr_rc(op, ram, registers);
