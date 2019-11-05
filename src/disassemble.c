@@ -1,20 +1,26 @@
 #include "disassemble.h"
 #include "eva.h"
-#include <stdint.h>
-#include <stdio.h>
 
-void disassemble(opcode_t *op) {
+void disassemble(opcode_t *op) { disassemble_file(stdout, op); }
+
+void disassemble_file(FILE *f, opcode_t *op) {
+	char buffer[100];
+	disassemble_str(buffer, op);
+	fprintf(f, "%.100s\n", buffer);
+}
+
+void disassemble_str(char *out, opcode_t *op) {
 	switch (op->instruction) {
 	case 0x0: {
 		/* ADD,ADC, MOV between registers */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
 		if (op->reset)
-			printf("MOV\tR%d, R%d\n", op1, op2);
+			sprintf(out, "MOV\tR%d, R%d", op1, op2);
 		else if (op->flag)
-			printf("ADC\tR%d, R%d\n", op1, op2);
+			sprintf(out, "ADC\tR%d, R%d", op1, op2);
 		else
-			printf("ADD\tR%d, R%d\n", op1, op2);
+			sprintf(out, "ADD\tR%d, R%d", op1, op2);
 		break;
 	}
 	case 0x1: {
@@ -23,20 +29,20 @@ void disassemble(opcode_t *op) {
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->reset)
-			printf("MOV\tR%d, #0x%04X\n", op1, op2);
+			sprintf(out, "MOV\tR%d, #0x%04X", op1, op2);
 		else if (op->flag)
-			printf("ADC\tR%d, #0x%04X\n", op1, op2);
+			sprintf(out, "ADC\tR%d, #0x%04X", op1, op2);
 		else
-			printf("ADD\tR%d, #0x%04X\n", op1, op2);
+			sprintf(out, "ADD\tR%d, #0x%04X", op1, op2);
 		break;
 	}
 	case 0x2: {
 		/* PUSH or POP a register */
 		uint8_t op1 = op->operands >> 16;
 		if (op->flag)
-			printf("POP\tR%d\n", op1);
+			sprintf(out, "POP\tR%d", op1);
 		else
-			printf("PUSH\tR%d\n", op1);
+			sprintf(out, "PUSH\tR%d", op1);
 		break;
 	}
 	case 0x3: {
@@ -44,17 +50,17 @@ void disassemble(opcode_t *op) {
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
 		if (op->flag)
-			printf("SUBC\tR%d, R%d\n", op1, op2);
+			sprintf(out, "SUBC\tR%d, R%d", op1, op2);
 		else
-			printf("SUB\tR%d, R%d\n", op1, op2);
+			sprintf(out, "SUB\tR%d, R%d", op1, op2);
 		break;
 	}
 	case 0x4: {
 		/* LDR from/to register(s) */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
-		printf("LDR\tR%d, [R%d]", op1, op2);
-		printf("\n");
+		sprintf(out, "LDR\tR%d, [R%d]", op1, op2);
+
 		break;
 	}
 	case 0x5: {
@@ -63,7 +69,7 @@ void disassemble(opcode_t *op) {
 		uint16_t op2;
 		op1 = (op->operands & 0xF0000) >> 16;
 		op2 = (op->operands & 0x0FFFF);
-		printf("LDR\tR%d, #0x%04X\n", op1, op2);
+		sprintf(out, "LDR\tR%d, #0x%04X", op1, op2);
 		break;
 	}
 	case 0x7: {
@@ -72,17 +78,17 @@ void disassemble(opcode_t *op) {
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->flag)
-			printf("SUBC\tR%d, #0x%04X\n", op1, op2);
+			sprintf(out, "SUBC\tR%d, #0x%04X", op1, op2);
 		else
-			printf("SUB\tR%d, #0x%04X\n", op1, op2);
+			sprintf(out, "SUB\tR%d, #0x%04X", op1, op2);
 		break;
 	}
 	case 0x8: {
 		/* STR from/to register(s) */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
-		printf("STR\tR%d, [R%d]", op1, op2);
-		printf("\n");
+		sprintf(out, "STR\tR%d, [R%d]", op1, op2);
+
 		break;
 	}
 	case 0x9: {
@@ -90,7 +96,7 @@ void disassemble(opcode_t *op) {
 		uint8_t op1;
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
-		printf("STR\tR%d, #0x%04X\n", op1, op2);
+		sprintf(out, "STR\tR%d, #0x%04X", op1, op2);
 		break;
 	}
 	case 0xB: {
@@ -99,23 +105,22 @@ void disassemble(opcode_t *op) {
 		opcode_get_register_register(op, &reg, NULL);
 		if (op->offset == 0) {
 			if (op->flag)
-				printf("BNEQ\tR%d", reg);
+				sprintf(out, "BNEQ\tR%d", reg);
 			else
-				printf("BEQ\tR%d", reg);
+				sprintf(out, "BEQ\tR%d", reg);
 
 		} else {
 			if (op->flag)
-				printf("BLT\tR%d", reg);
+				sprintf(out, "BLT\tR%d", reg);
 			else
-				printf("BLE\tR%d", reg);
+				sprintf(out, "BLE\tR%d", reg);
 		}
-		printf("\n");
 	}
 	case 0xC: {
 		/* Register value comparison */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
-		printf("CMP\tR%d, R%d\n", op1, op2);
+		sprintf(out, "CMP\tR%d, R%d", op1, op2);
 		break;
 	}
 	case 0xF: {
@@ -123,13 +128,13 @@ void disassemble(opcode_t *op) {
 		uint8_t reg;
 		opcode_get_register_register(op, &reg, NULL);
 		if (op->flag)
-			printf("OUT\tR%d\n", reg);
+			sprintf(out, "OUT\tR%d", reg);
 		else
-			printf("IN\tR%d\n", reg);
+			sprintf(out, "IN\tR%d", reg);
 		break;
 	}
 	default:
-		printf("#### ; Unrecognized opcode\n");
+		sprintf(out, "#### ; Unrecognized opcode");
 		break;
 	}
 }

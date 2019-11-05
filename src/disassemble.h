@@ -1,7 +1,8 @@
 #ifndef _H_DISASSEMBLE
 #define _H_DISASSEMBLE
-
 #include "eva.h"
+#include <stdio.h>
+#include <string.h>
 
 /**
  * @brief Disassemble a program into a textual assembly representation into
@@ -11,5 +12,7 @@
  * @param op Opcode to disassemble.
  */
 void disassemble(opcode_t *op);
+void disassemble_file(FILE *f, opcode_t *op);
+void disassemble_str(char *out, opcode_t *op);
 
 #endif
