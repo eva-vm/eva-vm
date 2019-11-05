@@ -18,6 +18,11 @@ typedef int32_t registers_t[16];
 #define EVA_REG_FLAG 11
 #define EVA_REG_PC 15
 
+#define OPCODE2INT(x) *((int32_t *)&(x))
+#define OPCODE2UINT(x) *((uint32_t *)&(x))
+#define INT2OPCODE(x) *((opcode_t *)&(x))
+#define UINT2OPCODE(x) *((opcode_t *)&(x))
+
 size_t opcode_read(opcode_t *out, FILE *in);
 void opcode_get_register_register(opcode_t *op, uint8_t *reg1, uint8_t *reg2);
 void opcode_get_register_value(opcode_t *op, uint8_t *reg, uint16_t *val);

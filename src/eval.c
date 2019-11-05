@@ -57,15 +57,29 @@ void eval_sub_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r1, r2;
 	opcode_get_register_register(op, &r1, &r2);
 
-	if (((registers[r1] > 0) && (registers[r2] > INT_MAX - registers[r1])) ||
-	    ((registers[r1] < 0) && (registers[r2] < INT_MIN - registers[r1]))) {
-		registers[EVA_REG_FLAG] = 1;
-	}
-
-	registers[r] -= registers[r2];
+	registers[r1] -= registers[r2];
 }
 
 void eval_sub_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t r;
+	uint16_t val;
+	opcode_get_register_value(op, &r, &val);
+
+	registers[r] -= val;
+}
+
+void eval_subc_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t r1, r2;
+	opcode_get_register_register(op, &r1, &r2);
+
+	if (((registers[r1] < 0) && (registers[r2] > INT_MAX - registers[r1])) ||
+	    ((registers[r1] > 0) && (registers[r2] < INT_MIN - registers[r1]))) {
+		registers[EVA_REG_FLAG] = 1;
+	}
+
+	registers[r1] -= registers[r2];
+}
+void eval_subc_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
 	uint16_t val;
 	opcode_get_register_value(op, &r, &val);
@@ -78,14 +92,32 @@ void eval_sub_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	registers[r] -= val;
 }
 
-void eval_subc_rr(opcode_t *op, opcode_t *ram, registers_t registers) {}
-void eval_subc_rc(opcode_t *op, opcode_t *ram, registers_t registers) {}
+void eval_ldr_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t r1, r2;
+	opcode_get_register_register(op, &r1, &r2);
+	registers[r1] = OPCODE2INT(ram[registers[r2]]);
+}
+void eval_ldr_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t r;
+	uint16_t val;
+	opcode_get_register_value(op, &r, &val);
 
-void eval_ldr_rr(opcode_t *op, opcode_t *ram, registers_t registers) {}
-void eval_ldr_rc(opcode_t *op, opcode_t *ram, registers_t registers) {}
+	registers[r] = OPCODE2INT(ram[val]);
+}
 
-void eval_str_rr(opcode_t *op, opcode_t *ram, registers_t registers) {}
-void eval_str_rc(opcode_t *op, opcode_t *ram, registers_t registers) {}
+void eval_str_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t r1, r2;
+	opcode_get_register_register(op, &r1, &r2);
+
+	ram[registers[r1]] = INT2OPCODE(registers[r2]);
+}
+void eval_str_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t r;
+	uint16_t val;
+	opcode_get_register_value(op, &r, &val);
+
+	ram[registers[r]] = INT2OPCODE(val);
+}
 
 void eval_push_r(opcode_t *op, opcode_t *ram, registers_t registers) {}
 void eval_pop_r(opcode_t *op, opcode_t *ram, registers_t registers) {}
