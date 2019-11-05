@@ -1,6 +1,9 @@
 #include "eva.h"
-#include <stdint.h>
-#include <stdio.h>
+#include "log.h"
+
+#if DENABLED(DLVL_DEBUG)
+#include "disassemble.h"
+#endif
 
 void eval_mov_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r1, r2;
@@ -152,6 +155,11 @@ void eval_ble_r(opcode_t *op, opcode_t *ram, registers_t registers) {}
 void eval_cmp_rr(opcode_t *op, opcode_t *ram, registers_t registers) {}
 
 void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
+#if DENABLED(DLVL_DEBUG)
+	char _out[100] = {0};
+	disassemble_str(_out, op);
+	LOG_DEBUG("opcode: %.100s", _out);
+#endif
 	switch (op->instruction) {
 	case 0x0:
 		if (op->reset)

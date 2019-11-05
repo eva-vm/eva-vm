@@ -1,5 +1,7 @@
 project('evavm', 'c', version: '0.1')
 
+add_project_arguments('-DLOG_LEVEL='+get_option('LOG_LEVEL'), language:'c')
+
 sdl_dep = dependency('sdl2', fallback: ['sdl2', 'sdl2_dep'], required: get_option('SDL'))
 
 subdir('src')
