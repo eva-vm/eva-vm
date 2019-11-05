@@ -15,7 +15,14 @@ typedef struct opcode_s {
 
 typedef int32_t registers_t[16];
 
+typedef enum {
+	EVA_CMP_EQUALS,
+	EVA_CMP_LESS_THAN,
+	EVA_CMP_GREATER_THAN
+} eva_comp_t;
+
 #define EVA_REG_FLAG 11
+#define EVA_REG_CMP 14
 #define EVA_REG_PC 15
 
 #define OPCODE2INT(x) *((int32_t *)&(x))
