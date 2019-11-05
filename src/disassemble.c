@@ -53,11 +53,8 @@ void disassemble(opcode_t *op) {
 		/* LDR from/to register(s) */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
-		printf("LDR\tR%d", op1);
-		if (op2)
-			printf(", R%d\n", op2);
-		else
-			printf("\n");
+		printf("LDR\tR%d, [R%d]", op1, op2);
+		printf("\n");
 		break;
 	}
 	case 0x5: {
@@ -84,9 +81,7 @@ void disassemble(opcode_t *op) {
 		/* STR from/to register(s) */
 		uint8_t op1, op2;
 		opcode_get_register_register(op, &op1, &op2);
-		printf("STR\tR%d", op1);
-		if (op2)
-			printf(", R%d", op2);
+		printf("STR\tR%d, [R%d]", op1, op2);
 		printf("\n");
 		break;
 	}
