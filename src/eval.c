@@ -102,7 +102,7 @@ void eval_ldr_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint16_t val;
 	opcode_get_register_value(op, &r, &val);
 
-	registers[r] = OPCODE2INT(ram[val]);
+	registers[r] = OPCODE2INT(val);
 }
 
 void eval_str_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
@@ -119,8 +119,14 @@ void eval_str_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	ram[registers[r]] = INT2OPCODE(val);
 }
 
-void eval_push_r(opcode_t *op, opcode_t *ram, registers_t registers) {}
-void eval_pop_r(opcode_t *op, opcode_t *ram, registers_t registers) {}
+// TODO
+void eval_push_r(opcode_t *op, opcode_t *ram, registers_t registers) {
+	fprintf(stderr, "PUSH not supported\n");
+}
+// TODO
+void eval_pop_r(opcode_t *op, opcode_t *ram, registers_t registers) {
+	fprintf(stderr, "POP not supported\n");
+}
 
 void eval_in_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t reg;
