@@ -112,7 +112,7 @@ void eval_str_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r1, r2;
 	opcode_get_register_register(op, &r1, &r2);
 
-	ram[registers[r1]] = INT2OPCODE(registers[r2]);
+	ram[registers[r2]] = INT2OPCODE(registers[r1]);
 }
 void eval_str_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
@@ -133,18 +133,13 @@ void eval_pop_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 
 void eval_in_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t reg;
-	uint32_t adr;
-	char c = getchar();
 	opcode_get_register_register(op, &reg, NULL);
-	adr = registers[reg];
-	ram[adr] = *((opcode_t *)(&c));
+	registers[reg] = getchar();
 }
 void eval_out_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t reg;
-	uint32_t adr;
 	opcode_get_register_register(op, &reg, NULL);
-	adr = registers[reg];
-	putchar(*(int *)(ram + adr));
+	putchar(registers[reg]);
 }
 
 void eval_beq_r(opcode_t *op, opcode_t *ram, registers_t registers) {}
@@ -222,6 +217,7 @@ void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 		break;
 	case 0xC: {
 		eval_cmp_rr(op, ram, registers);
+		break;
 	}
 	case 0xF:
 		if (op->flag)
