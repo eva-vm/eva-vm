@@ -1,5 +1,7 @@
 #include "disassemble.h"
 #include "eva.h"
+#include <stdint.h>
+#include <stdio.h>
 
 void disassemble(opcode_t *op) { disassemble_file(stdout, op); }
 
@@ -29,11 +31,11 @@ void disassemble_str(char *out, opcode_t *op) {
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->reset)
-			sprintf(out, "MOV\tR%d, #0x%04X", op1, op2);
+			sprintf(out, "MOV\tR%d, #%d", op1, op2);
 		else if (op->flag)
-			sprintf(out, "ADC\tR%d, #0x%04X", op1, op2);
+			sprintf(out, "ADC\tR%d, #%d", op1, op2);
 		else
-			sprintf(out, "ADD\tR%d, #0x%04X", op1, op2);
+			sprintf(out, "ADD\tR%d, #%d", op1, op2);
 		break;
 	}
 	case 0x2: {
@@ -69,7 +71,7 @@ void disassemble_str(char *out, opcode_t *op) {
 		uint16_t op2;
 		op1 = (op->operands & 0xF0000) >> 16;
 		op2 = (op->operands & 0x0FFFF);
-		sprintf(out, "LDR\tR%d, #0x%04X", op1, op2);
+		sprintf(out, "LDR\tR%d, #%d", op1, op2);
 		break;
 	}
 	case 0x7: {
@@ -78,9 +80,9 @@ void disassemble_str(char *out, opcode_t *op) {
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
 		if (op->flag)
-			sprintf(out, "SUBC\tR%d, #0x%04X", op1, op2);
+			sprintf(out, "SUBC\tR%d, #%d", op1, op2);
 		else
-			sprintf(out, "SUB\tR%d, #0x%04X", op1, op2);
+			sprintf(out, "SUB\tR%d, #%d", op1, op2);
 		break;
 	}
 	case 0x8: {
@@ -96,7 +98,7 @@ void disassemble_str(char *out, opcode_t *op) {
 		uint8_t op1;
 		uint16_t op2;
 		opcode_get_register_value(op, &op1, &op2);
-		sprintf(out, "STR\tR%d, #0x%04X", op1, op2);
+		sprintf(out, "STR\tR%d, #%d", op1, op2);
 		break;
 	}
 	case 0xB: {
@@ -115,12 +117,20 @@ void disassemble_str(char *out, opcode_t *op) {
 			else
 				sprintf(out, "BLE\tR%d", reg);
 		}
+		break;
 	}
 	case 0xC: {
 		/* Register value comparison */
-		uint8_t op1, op2;
-		opcode_get_register_register(op, &op1, &op2);
-		sprintf(out, "CMP\tR%d, R%d", op1, op2);
+		uint8_t op1;
+		if (op->offset) {
+			uint16_t val;
+			opcode_get_register_value(op, &op1, &val);
+			sprintf(out, "CMP\tR%d, #%d", op1, val);
+		} else {
+			uint8_t op2;
+			opcode_get_register_register(op, &op1, &op2);
+			sprintf(out, "CMP\tR%d, R%d", op1, op2);
+		}
 		break;
 	}
 	case 0xF: {
