@@ -8,6 +8,9 @@ if get_option('SDL').enabled() and not sdl_dep.found()
 	sdl_dep = import('cmake').subproject('sdl2').dependency('SDL2main')
 endif
 
+eva_inc = include_directories('include')
+
+subdir('include')
 subdir('src')
 subdir('test')
 

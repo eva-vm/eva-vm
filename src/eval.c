@@ -1,8 +1,8 @@
-#include "eva.h"
+#include <evavm/eva.h>
 #include "log.h"
 
 #if DENABLED(DLVL_DEBUG)
-#include "disassemble.h"
+#include <evavm/disassemble.h>
 #endif
 
 void eval_mov_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
