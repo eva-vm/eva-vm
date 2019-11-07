@@ -1,5 +1,4 @@
 {
-	"C_Cpp.default.compileCommands": ".vscode/build/compile_commands.json",
 	"mesonbuild.configureOnOpen": true,
 	"editor.rulers": [
 		80
@@ -10,4 +9,9 @@
 		"-DWITH_TESTS=true",
 		"--layout=flat"
 	],
+	"files.associations": {
+		"*.evasm": "arm",
+		"eva.h": "c",
+		"cli.h": "c"
+	},
 }
