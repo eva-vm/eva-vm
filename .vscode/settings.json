@@ -10,11 +10,4 @@
 		"-DWITH_TESTS=true",
 		"--layout=flat"
 	],
-	"C_Cpp.autocomplete": "Disabled",
-	"C_Cpp.formatting": "Disabled",
-	"C_Cpp.errorSquiggles": "Disabled",
-	"C_Cpp.intelliSenseEngine": "Disabled",
-	"clangd.arguments": [
-		"--compile-commands-dir=.vscode/build"
-	]
 }
