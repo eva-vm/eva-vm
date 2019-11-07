@@ -1,4 +1,4 @@
-#include "test.h"
+#include <evatest/test.h>
 #include "../src/cli.h"
 #include "../src/eva.h"
 
