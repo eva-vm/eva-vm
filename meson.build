@@ -2,7 +2,11 @@ project('evavm', 'c', version: '0.1')
 
 add_project_arguments('-DLOG_LEVEL='+get_option('LOG_LEVEL'), language:'c')
 
-sdl_dep = dependency('sdl2', fallback: ['sdl2', 'sdl2_dep'], required: get_option('SDL'))
+sdl_dep = dependency('sdl2', required: false)
+
+if get_option('SDL').enabled() and not sdl_dep.found()
+	sdl_dep = import('cmake').subproject('sdl2').dependency('SDL2main')
+endif
 
 subdir('src')
 subdir('test')
