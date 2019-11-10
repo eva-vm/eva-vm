@@ -1,5 +1,4 @@
 {
-	"C_Cpp.default.compileCommands": ".vscode/build/compile_commands.json",
 	"mesonbuild.configureOnOpen": true,
 	"editor.rulers": [
 		80
@@ -10,11 +9,10 @@
 		"-DWITH_TESTS=true",
 		"--layout=flat"
 	],
-	"C_Cpp.autocomplete": "Disabled",
-	"C_Cpp.formatting": "Disabled",
-	"C_Cpp.errorSquiggles": "Disabled",
-	"C_Cpp.intelliSenseEngine": "Disabled",
-	"clangd.arguments": [
-		"--compile-commands-dir=.vscode/build"
-	]
+	"files.associations": {
+		"*.evasm": "arm",
+		"eva.h": "c",
+		"cli.h": "c"
+	},
+	"ccls.misc.compilationDatabaseDirectory": ".vscode/build"
 }

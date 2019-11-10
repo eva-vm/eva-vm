@@ -1,2 +1,4 @@
 option('SDL', type: 'feature', value: 'auto')
+option('DOCS', type: 'feature', value: 'auto')
 option('WITH_TESTS', type: 'boolean', value: false)
+option('LOG_LEVEL', type:'combo', choices:['0', '1', '2', '3'], value: '3')
