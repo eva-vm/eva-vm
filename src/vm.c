@@ -1,6 +1,6 @@
 #include "cli.h"
-#include "disassemble.h"
-#include "eva.h"
+#include <evavm/disassemble.h>
+#include <evavm/eva.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

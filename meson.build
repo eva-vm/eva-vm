@@ -4,6 +4,9 @@ add_project_arguments('-DLOG_LEVEL='+get_option('LOG_LEVEL'), language:'c')
 
 sdl_dep = dependency('sdl2', fallback: ['sdl2', 'sdl2_dep'], required: get_option('SDL'))
 
+eva_inc = include_directories('include')
+
+subdir('include')
 subdir('src')
 subdir('test')
 

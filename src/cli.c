@@ -1,5 +1,5 @@
 #include "cli.h"
-#include "eva.h"
+#include <evavm/eva.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>

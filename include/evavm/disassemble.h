@@ -1,6 +1,6 @@
 #ifndef _H_DISASSEMBLE
 #define _H_DISASSEMBLE
-#include "eva.h"
+#include <evavm/eva.h>
 #include <stdio.h>
 #include <string.h>
 

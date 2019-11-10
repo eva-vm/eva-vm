@@ -1,7 +1,5 @@
-#include "disassemble.h"
-#include "eva.h"
-#include <stdint.h>
-#include <stdio.h>
+#include <evavm/disassemble.h>
+#include <evavm/eva.h>
 
 void disassemble(opcode_t *op) { disassemble_file(stdout, op); }
 

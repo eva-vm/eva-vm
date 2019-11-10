@@ -1,0 +1,4 @@
+[wrap-git]
+directory = evatest-1.0
+url = https://github.com/eva-vm/eva_test.git
+revision = 1.0

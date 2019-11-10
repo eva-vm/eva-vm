@@ -1,6 +1,6 @@
-#include "test.h"
+#include <evatest/test.h>
 #include "../src/cli.h"
-#include "../src/eva.h"
+#include <evavm/eva.h>
 
 int main() {
 	char *args1[] = {"<exe>", "--debug"};
