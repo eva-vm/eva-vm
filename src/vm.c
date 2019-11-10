@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 	       instr_count < args.ram_size) {
 		instr_count++;
 	}
-	fprintf(stderr, "Read %d instructions into memory\n", instr_count);
+	LOG_INFO("Read %d instructions into memory", instr_count);
 	if (args.disassemble) {
 
 		for (int i = 0; i < instr_count; i++) {

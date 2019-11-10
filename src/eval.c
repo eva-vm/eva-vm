@@ -278,4 +278,5 @@ void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 		fprintf(stderr, "Unknown instruction %X\n", op->instruction);
 		break;
 	}
+	LOG_DEBUG("        R0: %d, R1: %d", registers[0], registers[1]);
 }
