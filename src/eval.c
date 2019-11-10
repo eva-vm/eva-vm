@@ -146,25 +146,25 @@ void eval_beq_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] == EVA_CMP_EQUALS)
-		registers[EVA_REG_PC] = registers[r];
+		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
 }
 void eval_bneq_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] != EVA_CMP_EQUALS)
-		registers[EVA_REG_PC] = registers[r];
+		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
 }
 void eval_blt_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] == EVA_CMP_LESS_THAN)
-		registers[EVA_REG_PC] = registers[r];
+		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
 }
 void eval_ble_r(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] != EVA_CMP_GREATER_THAN)
-		registers[EVA_REG_PC] = registers[r];
+		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
 }
 
 void eval_cmp_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
