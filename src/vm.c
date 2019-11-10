@@ -1,4 +1,5 @@
 #include "cli.h"
+#include "log.h"
 #include <evavm/disassemble.h>
 #include <evavm/eva.h>
 #include <stdint.h>
