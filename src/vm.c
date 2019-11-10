@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 void print_help(char *argv0) {
-	printf("Usage: %.50s [-h] [--debug] [--ram-size SIZE] FILE\n", argv0);
+	printf("Usage: %.50s [-h] [--debug] [--ram-size SIZE] [FILE]\n", argv0);
 	printf("\n");
 	printf("FILE\t\tFile to execute by the Eva VM\n");
 	printf("-h\t\tPrint this help screen and exit\n");
