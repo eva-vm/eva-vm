@@ -181,6 +181,20 @@ void eval_cmp_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
 	registers[EVA_REG_CMP] = (int32_t)cmp;
 }
 
+void eval_cmp_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
+	uint8_t reg;
+	uint16_t val;
+	opcode_get_register_value(op, &reg, &val);
+	eva_comp_t cmp;
+	if (registers[reg] == val)
+		cmp = EVA_CMP_EQUALS;
+	else if (registers[reg] < val)
+		cmp = EVA_CMP_LESS_THAN;
+	else
+		cmp = EVA_CMP_GREATER_THAN;
+	registers[EVA_REG_CMP] = (int32_t)cmp;
+}
+
 void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 #if DENABLED(DLVL_DEBUG)
 	char _out[100] = {0};
@@ -248,7 +262,10 @@ void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 		}
 		break;
 	case 0xC: {
-		eval_cmp_rr(op, ram, registers);
+		if(op->offset == 0)
+			eval_cmp_rr(op, ram, registers);
+		else
+			eval_cmp_rc(op, ram, registers);
 		break;
 	}
 	case 0xF:
