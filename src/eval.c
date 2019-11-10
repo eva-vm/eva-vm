@@ -1,5 +1,5 @@
-#include <evavm/eva.h>
 #include "log.h"
+#include <evavm/eva.h>
 
 #if DENABLED(DLVL_DEBUG)
 #include <evavm/disassemble.h>
@@ -98,14 +98,14 @@ void eval_subc_rc(uint32_t *op, uint32_t *ram, registers_t registers) {
 void eval_ldr_rr(uint32_t *op, uint32_t *ram, registers_t registers) {
 	uint8_t r1, r2;
 	opcode_get_register_register(op, &r1, &r2);
-	registers[r1] = OPCODE2INT(ram[registers[r2]]);
+	registers[r1] = ram[registers[r2]];
 }
 void eval_ldr_rc(uint32_t *op, uint32_t *ram, registers_t registers) {
 	uint8_t r;
 	uint16_t adr;
 	opcode_get_register_value(op, &r, &adr);
 
-	registers[r] = OPCODE2INT(ram[adr]);
+	registers[r] = ram[adr];
 }
 
 void eval_str_rr(uint32_t *op, uint32_t *ram, registers_t registers) {
@@ -146,25 +146,33 @@ void eval_beq_r(uint32_t *op, uint32_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] == EVA_CMP_EQUALS)
-		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
+		registers[EVA_REG_PC] =
+		    registers[r] -
+		    1; // PC will get re-incremented at the next iteration
 }
 void eval_bneq_r(uint32_t *op, uint32_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] != EVA_CMP_EQUALS)
-		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
+		registers[EVA_REG_PC] =
+		    registers[r] -
+		    1; // PC will get re-incremented at the next iteration
 }
 void eval_blt_r(uint32_t *op, uint32_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] == EVA_CMP_LESS_THAN)
-		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
+		registers[EVA_REG_PC] =
+		    registers[r] -
+		    1; // PC will get re-incremented at the next iteration
 }
 void eval_ble_r(uint32_t *op, uint32_t *ram, registers_t registers) {
 	uint8_t r;
 	opcode_get_register_register(op, &r, NULL);
 	if (registers[EVA_REG_CMP] != EVA_CMP_GREATER_THAN)
-		registers[EVA_REG_PC] = registers[r]-1; // PC will get re-incremented at the next iteration
+		registers[EVA_REG_PC] =
+		    registers[r] -
+		    1; // PC will get re-incremented at the next iteration
 }
 
 void eval_cmp_rr(uint32_t *op, uint32_t *ram, registers_t registers) {
@@ -265,7 +273,7 @@ void opcode_eval(uint32_t *op, uint32_t *ram, registers_t registers) {
 		}
 		break;
 	case 0xC: {
-		if(offset == 0)
+		if (offset == 0)
 			eval_cmp_rr(op, ram, registers);
 		else
 			eval_cmp_rc(op, ram, registers);

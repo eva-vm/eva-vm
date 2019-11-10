@@ -28,34 +28,11 @@ typedef enum {
 /** @brief Frame pointer register index */
 #define EVA_REG_FP 12
 /** @brief Stack pointer register index */
-#define EVA_REG_SP	13
+#define EVA_REG_SP 13
 /** @brief Comparison results register index */
 #define EVA_REG_CMP 14
 /** @brief Program counter register index */
 #define EVA_REG_PC 15
-
-/**
- * @brief Conversion macro to "force" convert an op-code into an integer.
- *
- */
-#define OPCODE2INT(x) *((int32_t *)&(x))
-/**
- * @brief Conversion macro to "force" convert an op-code into an unsigned
- * integer.
- *
- */
-#define OPCODE2UINT(x) *((uint32_t *)&(x))
-/**
- * @brief Conversion macro to "force" convert an integer into an op-code.
- *
- */
-#define INT2OPCODE(x) *((opcode_t *)&(x))
-/**
- * @brief Conversion macro to "force" convert an unsigned integer into an
- * op-code.
- *
- */
-#define UINT2OPCODE(x) *((opcode_t *)&(x))
 
 /**
  * @brief Read an op-code from the input file in.
@@ -74,7 +51,8 @@ size_t opcode_read(uint32_t *out, FILE *in);
  * @param flag Flag flag
  * @param offset Offset amount
  */
-void opcode_get_data(uint32_t *op, uint8_t *code, bool *reset, bool *flag, uint8_t *offset);
+void opcode_get_data(uint32_t *op, uint8_t *code, bool *reset, bool *flag,
+                     uint8_t *offset);
 /**
  * @brief Extract the register operands from the input op-code.
  *
