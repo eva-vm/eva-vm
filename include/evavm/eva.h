@@ -23,6 +23,8 @@ typedef enum {
 } eva_comp_t;
 
 #define EVA_REG_FLAG 11
+#define EVA_REG_FP 12
+#define EVA_REG_SP	13
 #define EVA_REG_CMP 14
 #define EVA_REG_PC 15
 
