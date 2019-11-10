@@ -69,15 +69,15 @@ typedef enum {
 	EVA_CMP_GREATER_THAN
 } eva_comp_t;
 
-/** Flag register index */
+/** @brief Flag register index */
 #define EVA_REG_FLAG 11
-/** Frame pointer register index */
+/** @brief Frame pointer register index */
 #define EVA_REG_FP 12
-/** Stack pointer register index */
+/** @brief Stack pointer register index */
 #define EVA_REG_SP	13
-/** Comparison results register index */
+/** @brief Comparison results register index */
 #define EVA_REG_CMP 14
-/** Program counter register index */
+/** @brief Program counter register index */
 #define EVA_REG_PC 15
 
 /**

@@ -16,7 +16,7 @@ if doxygen_exe.found()
 	doxyconf = configuration_data()
 	doxyconf.set_quoted('PROJECT_NAME', meson.project_name())
 	doxyconf.set_quoted('PROJECT_VERSION', meson.project_version())
-	doxyconf.set_quoted('SOURCE_DIR', meson.current_source_dir() / 'src')
+	doxyconf.set_quoted('SOURCE_DIR', meson.current_source_dir())
 	doxyconf.set_quoted('OUTPUT_DIR', doxyout)
 
 	doxyfile = configure_file(input: 'Doxyfile.meson',
