@@ -16,6 +16,7 @@ typedef struct opcode_s {
 typedef int32_t registers_t[16];
 
 typedef enum {
+	EVA_CMP_UNSET,
 	EVA_CMP_EQUALS,
 	EVA_CMP_LESS_THAN,
 	EVA_CMP_GREATER_THAN

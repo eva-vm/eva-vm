@@ -102,10 +102,10 @@ void eval_ldr_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
 }
 void eval_ldr_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
-	uint16_t val;
-	opcode_get_register_value(op, &r, &val);
+	uint16_t adr;
+	opcode_get_register_value(op, &r, &adr);
 
-	registers[r] = OPCODE2INT(val);
+	registers[r] = OPCODE2INT(ram[adr]);
 }
 
 void eval_str_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
@@ -116,10 +116,10 @@ void eval_str_rr(opcode_t *op, opcode_t *ram, registers_t registers) {
 }
 void eval_str_rc(opcode_t *op, opcode_t *ram, registers_t registers) {
 	uint8_t r;
-	uint16_t val;
-	opcode_get_register_value(op, &r, &val);
+	uint16_t adr;
+	opcode_get_register_value(op, &r, &adr);
 
-	ram[registers[r]] = INT2OPCODE(val);
+	ram[adr] = INT2OPCODE(registers[r]);
 }
 
 // TODO
@@ -185,7 +185,7 @@ void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 #if DENABLED(DLVL_DEBUG)
 	char _out[100] = {0};
 	disassemble_str(_out, op);
-	LOG_DEBUG("opcode: %.100s", _out);
+	LOG_DEBUG("[pc %d] opcode: %.100s", registers[EVA_REG_PC], _out);
 #endif
 	switch (op->instruction) {
 	case 0x0:
@@ -258,6 +258,7 @@ void opcode_eval(opcode_t *op, opcode_t *ram, registers_t registers) {
 			eval_in_r(op, ram, registers);
 		break;
 	default:
-		fprintf(stderr, "Unknown instruction %X", op->instruction);
+		fprintf(stderr, "Unknown instruction %X\n", op->instruction);
+		break;
 	}
 }

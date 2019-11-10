@@ -44,9 +44,8 @@ int main(int argc, char **argv) {
 		// RUN THE THING!
 		registers_t registers = {0};
 
-		while (instr_count) {
+		while (registers[EVA_REG_PC] < instr_count) {
 			opcode_eval(ram + registers[EVA_REG_PC], ram, registers);
-			instr_count--;
 			registers[EVA_REG_PC]++;
 		}
 	}
