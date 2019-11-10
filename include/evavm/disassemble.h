@@ -9,10 +9,29 @@
  * stdout.
  * ATTENTION: The resulting assembly code will often NOT be the same as the
  * input assembly code.
+ *
  * @param op Opcode to disassemble.
  */
 void disassemble(opcode_t *op);
+/**
+ * @brief Disassemble a program into a textual assembly representation into
+ * file f.
+ * ATTENTION: The resulting assembly code will often NOT be the same as the
+ * input assembly code.
+ *
+ * @param f Output file, must be open in writable mode.
+ * @param op Op-code to disassemble.
+ */
 void disassemble_file(FILE *f, opcode_t *op);
+/**
+ * @brief Disassemble a program into a textual assembly representation into the
+ * output buffer.
+ * ATTENTION: The resulting assembly code will often NOT be the same as the
+ * input assembly code.
+ *
+ * @param out Output string buffer.
+ * @param op Op-code to disassemble.
+ */
 void disassemble_str(char *out, opcode_t *op);
 
 #endif
