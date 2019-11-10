@@ -11,7 +11,7 @@ void args_init(args_t *args) {
 	    256 * 1024 * 1024 / sizeof(opcode_t); // 1 instruction is 4 bits long
 	args->help = 0;
 	args->disassemble = 0;
-	args->input = NULL;
+	args->input = stdin;
 }
 
 void args_parse(args_t *args, int argc, char **argv) {
@@ -28,8 +28,12 @@ void args_parse(args_t *args, int argc, char **argv) {
 		} else if (strcmp(argv[i], "--disassemble") == 0)
 			args->disassemble = 1;
 
-		else
-			args->input = fopen(argv[i], "rb");
+		else {
+			if(strcmp(argv[i], "-") == 0)
+				args->input = stdin;
+			else
+				args->input = fopen(argv[i], "rb");
+		}
 		i++;
 	}
 }
