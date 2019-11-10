@@ -12,7 +12,7 @@
  *
  * @param op Opcode to disassemble.
  */
-void disassemble(opcode_t *op);
+void disassemble(uint32_t *op);
 /**
  * @brief Disassemble a program into a textual assembly representation into
  * file f.
@@ -22,7 +22,7 @@ void disassemble(opcode_t *op);
  * @param f Output file, must be open in writable mode.
  * @param op Op-code to disassemble.
  */
-void disassemble_file(FILE *f, opcode_t *op);
+void disassemble_file(FILE *f, uint32_t *op);
 /**
  * @brief Disassemble a program into a textual assembly representation into the
  * output buffer.
@@ -32,6 +32,6 @@ void disassemble_file(FILE *f, opcode_t *op);
  * @param out Output string buffer.
  * @param op Op-code to disassemble.
  */
-void disassemble_str(char *out, opcode_t *op);
+void disassemble_str(char *out, uint32_t *op);
 
 #endif

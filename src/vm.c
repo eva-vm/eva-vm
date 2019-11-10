@@ -19,7 +19,7 @@ void print_help(char *argv0) {
 
 int main(int argc, char **argv) {
 	args_t args;
-	opcode_t *ram;
+	uint32_t *ram;
 	int instr_count = 0;
 
 	args_parse(&args, argc, argv);
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	ram = malloc(sizeof(opcode_t) * args.ram_size);
+	ram = malloc(sizeof(uint32_t) * args.ram_size);
 
 	while (opcode_read(ram + instr_count, args.input) &&
 	       instr_count < args.ram_size) {
